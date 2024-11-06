@@ -10,7 +10,7 @@
   <packaging>war</packaging>
 
   <name>crud-web-app Maven Webapp</name>
-  <url>http://crud.portella.dev</url>
+  <url>https://crud.portella.dev</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
