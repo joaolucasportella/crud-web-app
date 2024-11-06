@@ -1,0 +1,21 @@
+# Diretórios do Maven
+target/
+
+# Arquivos de configuração do VSCode
+.vscode/
+
+# Configuração específica do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos e diretórios do sistema
+*.log
+*.tmp
+*.swp
+
+# Arquivos e diretórios gerados pelo sistema operacional Linux
+*~
+
+# Configurações do Maven
+mvnw
+mvnw.cmd
