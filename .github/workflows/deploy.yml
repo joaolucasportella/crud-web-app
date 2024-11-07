@@ -29,13 +29,5 @@ jobs:
           username: ${{ secrets.USER }}
           key: ${{ secrets.KEY }}
           source: 'target/crud-web-app.war'
-          target: '/var/www/crud_java'
+          target: '/opt/tomcat/webapps/crud-web-app'
           strip_components: 1
-
-      - name: Restart Tomcat
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
-          key: ${{ secrets.KEY }}
-          script: 'sudo systemctl restart tomcat'
