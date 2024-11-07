@@ -29,5 +29,5 @@ jobs:
           username: ${{ secrets.USER }}
           key: ${{ secrets.KEY }}
           source: 'target/crud-web-app.war'
-          target: '/opt/tomcat/webapps'
+          target: '/opt/tomcat/webapps/crud-web-app'
           strip_components: 1
