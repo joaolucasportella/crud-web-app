@@ -2,6 +2,7 @@ package dev.portella.crudwebapp.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Customer {
@@ -36,6 +37,7 @@ public class Customer {
     @Column(unique = true, length = 20)
     private String document;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
     public Long getId() {
