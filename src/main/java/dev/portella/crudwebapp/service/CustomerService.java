@@ -1,19 +1,19 @@
 package dev.portella.crudwebapp.service;
 
-import dev.portella.crudwebapp.dao.CustomerDAO;
-import dev.portella.crudwebapp.model.Customer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+import dev.portella.crudwebapp.dao.CustomerDAO;
+import dev.portella.crudwebapp.model.Customer;
 
 @Service
 public class CustomerService {
 
     private final CustomerDAO customerDAO;
 
-    @Autowired public CustomerService(CustomerDAO customerDAO) {
+    public CustomerService(CustomerDAO customerDAO) {
         this.customerDAO = customerDAO;
     }
 

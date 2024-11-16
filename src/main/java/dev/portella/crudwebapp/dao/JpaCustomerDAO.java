@@ -1,12 +1,13 @@
 package dev.portella.crudwebapp.dao;
 
+import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
 import dev.portella.crudwebapp.model.Customer;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public class JpaCustomerDAO implements CustomerDAO {
