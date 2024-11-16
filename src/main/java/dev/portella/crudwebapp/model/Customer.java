@@ -1,8 +1,19 @@
 package dev.portella.crudwebapp.model;
 
-import jakarta.persistence.*;
 import java.time.LocalDate;
+
 import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Customer {
@@ -10,35 +21,61 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 100)
+    @NotBlank(message = "{customer.firstName.notBlank}")
+    @Size(max = 25, message = "{customer.firstName.size}")
+    @Column(name = "first_name", nullable = false, length = 25)
     private String firstName;
 
-    @Column(nullable = false, length = 100)
+    @NotBlank(message = "{customer.lastName.notBlank}")
+    @Size(max = 25, message = "{customer.lastName.size}")
+    @Column(name = "last_name", nullable = false, length = 25)
     private String lastName;
 
-    @Column(nullable = false, unique = true, length = 100)
+    @NotBlank(message = "{customer.email.notBlank}")
+    @Email(message = "{customer.email.invalid}")
+    @Size(max = 50, message = "{customer.email.size}")
+    @Column(nullable = false, length = 50, unique = true)
     private String email;
 
-    @Column(length = 15)
+    @NotBlank(message = "{customer.phone.notBlank}")
+    @Pattern(regexp = "^\\d{10,15}$", message = "{customer.phone.pattern}")
+    @Size(max = 15, message = "{customer.phone.size}")
+    @Column(nullable = false, length = 15)
     private String phone;
 
-    @Column(length = 255)
+    @NotBlank(message = "{customer.address.notBlank}")
+    @Size(max = 255, message = "{customer.address.size}")
+    @Column(nullable = false, length = 255)
     private String address;
 
-    @Column(length = 100)
+    @NotBlank(message = "{customer.city.notBlank}")
+    @Size(max = 50, message = "{customer.city.size}")
+    @Column(nullable = false, length = 50)
     private String city;
 
-    @Column(length = 50)
+    @NotBlank(message = "{customer.state.notBlank}")
+    @Size(max = 50, message = "{customer.state.size}")
+    @Column(nullable = false, length = 50)
     private String state;
 
-    @Column(length = 10)
+    @NotBlank(message = "{customer.zipCode.notBlank}")
+    @Pattern(regexp = "^\\d{5}-\\d{3}$", message = "{customer.zipCode.pattern}")
+    @Size(max = 10, message = "{customer.zipCode.size}")
+    @Column(name = "zip_code", nullable = false, length = 10)
     private String zipCode;
 
-    @Column(unique = true, length = 20)
+    @NotBlank(message = "{customer.document.notBlank}")
+    @Size(max = 20, message = "{customer.document.size}")
+    @Column(nullable = false, length = 20, unique = true)
     private String document;
 
+    @NotNull(message = "{customer.birthDate.notNull}")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
+
+    @Column(name = "registration_date", nullable = false, updatable = false, insertable = false)
+    private LocalDate registrationDate;
 
     public Long getId() {
         return id;
@@ -126,5 +163,13 @@ public class Customer {
 
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public LocalDate getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(LocalDate registrationDate) {
+        this.registrationDate = registrationDate;
     }
 }
