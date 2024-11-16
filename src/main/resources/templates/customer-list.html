@@ -2,50 +2,52 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Lista de Clientes</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
+  <title>Lista de Clientes</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 
 <body>
-    <h1>Lista de Clientes</h1>
-    <a th:href="@{/customer/new}">Novo Cliente</a>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Telefone</th>
-                <th>Endereço</th>
-                <th>Cidade</th>
-                <th>Estado</th>
-                <th>CEP</th>
-                <th>Documento</th>
-                <th>Data de Nascimento</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="customer : ${customer}">
-                <td th:text="${customer.id}">ID</td>
-                <td th:text="${customer.firstName + ' ' + customer.lastName}">
-                    Nome
-                </td>
-                <td th:text="${customer.email}">Email</td>
-                <td th:text="${customer.phone}">Telefone</td>
-                <td th:text="${customer.address}">Endereço</td>
-                <td th:text="${customer.city}">Cidade</td>
-                <td th:text="${customer.state}">Estado</td>
-                <td th:text="${customer.zipCode}">CEP</td>
-                <td th:text="${customer.document}">Documento</td>
-                <td th:text="${customer.birthDate}">Data de Nascimento</td>
-                <td>
-                    <a th:href="@{/customer/edit/{id}(id=${customer.id})}">Editar</a>
-                    <a th:href="@{/customer/delete/{id}(id=${customer.id})}">Excluir</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+  <h1>Lista de Clientes</h1>
+  <a th:href="@{/customer/new}">Novo Cliente</a>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Telefone</th>
+        <th>Endereço</th>
+        <th>Cidade</th>
+        <th>Estado</th>
+        <th>CEP</th>
+        <th>Documento</th>
+        <th>Data de Nascimento</th>
+        <th>Data do Registro</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="customer : ${customer}">
+        <td th:text="${customer.id}">ID</td>
+        <td th:text="${customer.firstName + ' ' + customer.lastName}">
+          Nome
+        </td>
+        <td th:text="${customer.email}">Email</td>
+        <td th:text="${customer.phone}">Telefone</td>
+        <td th:text="${customer.address}">Endereço</td>
+        <td th:text="${customer.city}">Cidade</td>
+        <td th:text="${customer.state}">Estado</td>
+        <td th:text="${customer.zipCode}">CEP</td>
+        <td th:text="${customer.document}">Documento</td>
+        <td th:text="${customer.birthDate}">Data de Nascimento</td>
+        <td th:text="${customer.registrationDate}">Data do Registro</td>
+        <td>
+          <a th:href="@{/customer/edit/{id}(id=${customer.id})}">Editar</a>
+          <a th:href="@{/customer/delete/{id}(id=${customer.id})}">Excluir</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </body>
 
 </html>
