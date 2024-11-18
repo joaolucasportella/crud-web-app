@@ -9,6 +9,7 @@
 <body>
   <h1>Lista de Clientes</h1>
   <a th:href="@{/customer/new}">Novo Cliente</a>
+
   <table>
     <thead>
       <tr>
@@ -29,9 +30,7 @@
     <tbody>
       <tr th:each="customer : ${customer}">
         <td th:text="${customer.id}">ID</td>
-        <td th:text="${customer.firstName + ' ' + customer.lastName}">
-          Nome
-        </td>
+        <td th:text="${customer.firstName + ' ' + customer.lastName}">Nome</td>
         <td th:text="${customer.email}">Email</td>
         <td th:text="${customer.phone}">Telefone</td>
         <td th:text="${customer.address}">Endereço</td>
@@ -48,6 +47,18 @@
       </tr>
     </tbody>
   </table>
+
+  <div class="pagination">
+    <a th:if="${currentPage > 0}" th:href="@{/customer(page=${currentPage - 1}, size=${size})}">
+      Anterior
+    </a>
+
+    <span th:text="'Página ' + ${currentPage + 1} + ' de ' + ${totalPages}"></span>
+
+    <a th:if="${hasNextPage}" th:href="@{/customer(page=${currentPage + 1}, size=${size})}">
+      Próxima
+    </a>
+  </div>
 </body>
 
 </html>

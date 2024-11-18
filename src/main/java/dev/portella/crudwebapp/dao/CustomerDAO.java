@@ -1,11 +1,12 @@
 package dev.portella.crudwebapp.dao;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import dev.portella.crudwebapp.model.Customer;
 
 public interface CustomerDAO {
-    List<Customer> findAll();
+    Page<Customer> findPaginated(Pageable pageable);
 
     Customer findById(Long id);
 
