@@ -35,4 +35,8 @@ public class CustomerService {
     public void deleteById(Long id) {
         customerDAO.deleteById(id);
     }
+
+    public boolean isUnique(String field, String value) {
+        return customerDAO.findByField(field, value).isEmpty();
+    }
 }
