@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import dev.portella.crudwebapp.validation.Unique;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,6 +36,7 @@ public class Customer {
     @Email(message = "{customer.email.invalid}")
     @Size(max = 50, message = "{customer.email.size}")
     @Column(nullable = false, length = 50, unique = true)
+    @Unique(field = "email", message = "{customer.email.notUnique}")
     private String email;
 
     @NotBlank(message = "{customer.phone.notBlank}")
@@ -67,6 +69,7 @@ public class Customer {
     @NotBlank(message = "{customer.document.notBlank}")
     @Size(max = 20, message = "{customer.document.size}")
     @Column(nullable = false, length = 20, unique = true)
+    @Unique(field = "document", message = "{customer.document.notUnique}")
     private String document;
 
     @NotNull(message = "{customer.birthDate.notNull}")
