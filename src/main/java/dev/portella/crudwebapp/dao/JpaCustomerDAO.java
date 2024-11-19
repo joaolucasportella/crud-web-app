@@ -1,5 +1,7 @@
 package dev.portella.crudwebapp.dao;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +13,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 
@@ -20,11 +23,19 @@ public class JpaCustomerDAO implements CustomerDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
+    private CriteriaBuilder cb;
+    private CriteriaQuery<Customer> cq;
+    private Root<Customer> root;
+
+    private void initializeCriteriaQuery() {
+        cb = entityManager.getCriteriaBuilder();
+        cq = cb.createQuery(Customer.class);
+        root = cq.from(Customer.class);
+    }
+
     @Override
     public Page<Customer> findPaginated(Pageable pageable) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Customer> cq = cb.createQuery(Customer.class);
-        Root<Customer> root = cq.from(Customer.class);
+        initializeCriteriaQuery();
         cq.select(root);
 
         TypedQuery<Customer> query = entityManager.createQuery(cq);
@@ -42,6 +53,17 @@ public class JpaCustomerDAO implements CustomerDAO {
     @Override
     public Customer findById(Long id) {
         return entityManager.find(Customer.class, id);
+    }
+
+    @Override
+    public List<Customer> findByField(String field, Object value) {
+        initializeCriteriaQuery();
+
+        Predicate predicate = cb.equal(root.get(field), value);
+        cq.where(predicate);
+
+        TypedQuery<Customer> query = entityManager.createQuery(cq);
+        return query.getResultList();
     }
 
     @Override
