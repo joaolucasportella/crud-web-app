@@ -1,5 +1,8 @@
 package dev.portella.crudwebapp.controller;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +27,7 @@ public class CustomerController {
     private static final String REDIRECT = "redirect:/customer";
     private static final String FORM = "customer-form";
     private static final String LIST = "customer-list";
+    private static final String SEARCH = "customer-search";
     private static final String MODEL = "customer";
 
     public CustomerController(CustomerService customerService) {
@@ -31,7 +35,7 @@ public class CustomerController {
     }
 
     @GetMapping
-    public String list(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "2") int size,
+    public String list(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "15") int size,
             Model model) {
 
         Page<Customer> customerPage = customerService.findPaginated(page, size);
@@ -41,6 +45,23 @@ public class CustomerController {
         model.addAttribute("totalPages", customerPage.getTotalPages());
         model.addAttribute("hasNextPage", customerPage.hasNext());
         return LIST;
+    }
+
+    @GetMapping("/search")
+    public String searchById(@RequestParam String id, Model model) {
+        if (id == null || id.isEmpty()) {
+            return REDIRECT;
+        }
+
+        Optional<Customer> customer = customerService.findById(Long.parseLong(id));
+
+        if (customer.isEmpty()) {
+            model.addAttribute("errorMessage", "customer.notFound");
+            return SEARCH;
+        }
+
+        model.addAttribute(MODEL, List.of(customer.get()));
+        return SEARCH;
     }
 
     @GetMapping("/new")
