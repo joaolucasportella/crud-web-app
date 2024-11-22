@@ -8,16 +8,13 @@ import java.lang.annotation.Target;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
-@Target({ ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER, ElementType.ANNOTATION_TYPE })
+@Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = UniqueValidator.class)
-public @interface Unique {
-
-    String message() default "Este valor já existe.";
+@Constraint(validatedBy = UniqueCustomerValidator.class)
+public @interface UniqueCustomer {
+    String message() default "Este cliente já existe.";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
-
-    String field() default "";
 }

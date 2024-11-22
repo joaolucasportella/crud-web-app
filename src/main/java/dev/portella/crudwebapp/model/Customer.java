@@ -4,7 +4,8 @@ import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import dev.portella.crudwebapp.validation.Unique;
+import br.com.caelum.stella.bean.validation.CPF;
+import dev.portella.crudwebapp.validation.UniqueCustomer;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,6 +18,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @Entity
+@UniqueCustomer
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,50 +34,47 @@ public class Customer {
     @Column(name = "last_name", nullable = false, length = 25)
     private String lastName;
 
+    @NotBlank(message = "{customer.cpf.notBlank}")
+    @Pattern(regexp = "^\\d{11}$", message = "{customer.cpf.pattern}")
+    @CPF(message = "{customer.cpf.invalid}")
+    @Column(nullable = false, length = 11, unique = true)
+    private String cpf;
+
+    @NotNull(message = "{customer.birthDate.notNull}")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "birth_date", nullable = false)
+    private LocalDate birthDate;
+
     @NotBlank(message = "{customer.email.notBlank}")
+    @Size(max = 320, message = "{customer.email.size}")
     @Email(message = "{customer.email.invalid}")
-    @Size(max = 50, message = "{customer.email.size}")
-    @Column(nullable = false, length = 50, unique = true)
-    @Unique(field = "email", message = "{customer.email.notUnique}")
+    @Column(nullable = false, length = 320, unique = true)
     private String email;
 
     @NotBlank(message = "{customer.phone.notBlank}")
-    @Pattern(regexp = "^\\d{10,15}$", message = "{customer.phone.pattern}")
-    @Size(max = 15, message = "{customer.phone.size}")
-    @Column(nullable = false, length = 15)
+    @Pattern(regexp = "^\\d{11}$", message = "{customer.phone.pattern}")
+    @Column(nullable = false, length = 11)
     private String phone;
 
-    @NotBlank(message = "{customer.address.notBlank}")
-    @Size(max = 255, message = "{customer.address.size}")
-    @Column(nullable = false, length = 255)
-    private String address;
+    @NotBlank(message = "{customer.cep.notBlank}")
+    @Pattern(regexp = "^\\d{8}$", message = "{customer.cep.pattern}")
+    @Column(nullable = false, length = 8)
+    private String cep;
+
+    @NotBlank(message = "{customer.state.notBlank}")
+    @Size(max = 2, message = "{customer.state.size}")
+    @Column(nullable = false, length = 2)
+    private String state;
 
     @NotBlank(message = "{customer.city.notBlank}")
     @Size(max = 50, message = "{customer.city.size}")
     @Column(nullable = false, length = 50)
     private String city;
 
-    @NotBlank(message = "{customer.state.notBlank}")
-    @Size(max = 50, message = "{customer.state.size}")
-    @Column(nullable = false, length = 50)
-    private String state;
-
-    @NotBlank(message = "{customer.zipCode.notBlank}")
-    @Pattern(regexp = "^\\d{5}-\\d{3}$", message = "{customer.zipCode.pattern}")
-    @Size(max = 10, message = "{customer.zipCode.size}")
-    @Column(name = "zip_code", nullable = false, length = 10)
-    private String zipCode;
-
-    @NotBlank(message = "{customer.document.notBlank}")
-    @Size(max = 20, message = "{customer.document.size}")
-    @Column(nullable = false, length = 20, unique = true)
-    @Unique(field = "document", message = "{customer.document.notUnique}")
-    private String document;
-
-    @NotNull(message = "{customer.birthDate.notNull}")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "birth_date", nullable = false)
-    private LocalDate birthDate;
+    @NotBlank(message = "{customer.address.notBlank}")
+    @Size(max = 255, message = "{customer.address.size}")
+    @Column(nullable = false, length = 255)
+    private String address;
 
     @Column(name = "registration_date", nullable = false, updatable = false, insertable = false)
     private LocalDate registrationDate;
@@ -104,6 +103,22 @@ public class Customer {
         this.lastName = lastName;
     }
 
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -120,20 +135,12 @@ public class Customer {
         this.phone = phone;
     }
 
-    public String getAddress() {
-        return address;
+    public String getCep() {
+        return cep;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
+    public void setCep(String cep) {
+        this.cep = cep;
     }
 
     public String getState() {
@@ -144,28 +151,20 @@ public class Customer {
         this.state = state;
     }
 
-    public String getZipCode() {
-        return zipCode;
+    public String getCity() {
+        return city;
     }
 
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public String getDocument() {
-        return document;
+    public String getAddress() {
+        return address;
     }
 
-    public void setDocument(String document) {
-        this.document = document;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public LocalDate getRegistrationDate() {
