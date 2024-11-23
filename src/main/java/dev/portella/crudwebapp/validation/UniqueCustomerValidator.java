@@ -19,12 +19,14 @@ public class UniqueCustomerValidator implements ConstraintValidator<UniqueCustom
             return true;
         }
 
-        String email = customer.getEmail();
         String cpf = customer.getCpf();
+        String email = customer.getEmail();
+        String phone = customer.getPhone();
 
-        Boolean isEmailUnique = customerService.isUnique("email", email);
         Boolean isCpfUnique = customerService.isUnique("cpf", cpf);
+        Boolean isEmailUnique = customerService.isUnique("email", email);
+        Boolean isPhoneUnique = customerService.isUnique("phone", phone);
 
-        return isEmailUnique && isCpfUnique;
+        return isCpfUnique && isEmailUnique && isPhoneUnique;
     }
 }

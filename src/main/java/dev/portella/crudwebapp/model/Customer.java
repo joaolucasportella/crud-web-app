@@ -51,7 +51,7 @@ public class Customer {
 
     @NotBlank(message = "{customer.phone.notBlank}")
     @Pattern(regexp = "^\\d{11}$", message = "{customer.phone.pattern}")
-    @Column(nullable = false, length = 11)
+    @Column(nullable = false, length = 11, unique = true)
     private String phone;
 
     @NotBlank(message = "{customer.cep.notBlank}")
