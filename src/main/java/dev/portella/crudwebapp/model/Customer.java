@@ -24,13 +24,13 @@ public class Customer {
     private Long id;
 
     @NotBlank(message = "{customer.firstName.notBlank}")
-    @Size(max = 25, message = "{customer.firstName.size}")
-    @Column(name = "first_name", nullable = false, length = 25)
+    @Size(max = 50, message = "{customer.firstName.size}")
+    @Column(name = "first_name", nullable = false, length = 50)
     private String firstName;
 
     @NotBlank(message = "{customer.lastName.notBlank}")
-    @Size(max = 25, message = "{customer.lastName.size}")
-    @Column(name = "last_name", nullable = false, length = 25)
+    @Size(max = 50, message = "{customer.lastName.size}")
+    @Column(name = "last_name", nullable = false, length = 50)
     private String lastName;
 
     @NotBlank(message = "{customer.cpf.notBlank}")
