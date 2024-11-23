@@ -11,6 +11,18 @@ public class UniqueCustomerValidator implements ConstraintValidator<UniqueCustom
     @Autowired
     private CustomerService customerService;
 
+    private boolean validateUniqueness(String field, String value, String errorMessage, String propertyNode,
+            ConstraintValidatorContext context) {
+        if (!customerService.isUnique(field, value)) {
+            context.disableDefaultConstraintViolation();
+            context.buildConstraintViolationWithTemplate(errorMessage)
+                    .addPropertyNode(propertyNode)
+                    .addConstraintViolation();
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public boolean isValid(Customer customer, ConstraintValidatorContext context) {
         Long id = customer.getId();
@@ -23,10 +35,14 @@ public class UniqueCustomerValidator implements ConstraintValidator<UniqueCustom
         String email = customer.getEmail();
         String phone = customer.getPhone();
 
-        Boolean isCpfUnique = customerService.isUnique("cpf", cpf);
-        Boolean isEmailUnique = customerService.isUnique("email", email);
-        Boolean isPhoneUnique = customerService.isUnique("phone", phone);
+        boolean isValid = true;
 
-        return isCpfUnique && isEmailUnique && isPhoneUnique;
+        isValid &= validateUniqueness("cpf", cpf, "{customer.cpf.notUnique}", "cpf", context);
+
+        isValid &= validateUniqueness("email", email, "{customer.email.notUnique}", "email", context);
+
+        isValid &= validateUniqueness("phone", phone, "{customer.phone.notUnique}", "phone", context);
+
+        return isValid;
     }
 }
