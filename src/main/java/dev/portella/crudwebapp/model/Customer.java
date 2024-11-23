@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import br.com.caelum.stella.bean.validation.CPF;
 import dev.portella.crudwebapp.validation.UniqueCustomer;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,7 +35,6 @@ public class Customer {
 
     @NotBlank(message = "{customer.cpf.notBlank}")
     @Pattern(regexp = "^\\d{11}$", message = "{customer.cpf.pattern}")
-    @CPF(message = "{customer.cpf.invalid}")
     @Column(nullable = false, length = 11, unique = true)
     private String cpf;
 
