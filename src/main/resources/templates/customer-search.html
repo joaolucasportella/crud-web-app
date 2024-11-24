@@ -55,14 +55,17 @@
           <td th:text="${customer.address}">Endereço</td>
           <td th:text="${customer.registrationDate}">Data do Registro</td>
           <td>
-            <a th:href="@{/customer/edit/{id}(id=${customer.id})}">Editar</a>
-            <a th:href="@{/customer/delete/{id}(id=${customer.id})}">Excluir</a>
+            <a th:href="@{/customer/edit/{id}(id=${customer.id})}">
+              <button type="button">Editar</button>
+            </a>
+            <button type="button" onclick="confirmDelete(event, this)" th:attr="data-id=${customer.id}">Excluir</button>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
 
+  <script th:src="@{/js/delete-confirmation.js}" defer></script>
   <script th:src="@{/js/search.js}"></script>
 </body>
 
