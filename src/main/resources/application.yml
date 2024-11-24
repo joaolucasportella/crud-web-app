@@ -12,7 +12,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-      javax:
+      jakarta:
         persistence:
           validation:
             mode: none
