@@ -9,7 +9,9 @@
 <body>
   <h1 th:text="${customer.id == null ? 'Novo Cliente' : 'Editar Cliente'}">Título do Formulário</h1>
 
-  <a href="javascript:history.back()">Voltar</a>
+  <a th:href="@{/customer}">
+    <button type="button">Página Inicial</button>
+  </a>
 
   <form th:action="@{/customer}" th:object="${customer}" method="post">
     <input type="hidden" th:field="*{id}" />
