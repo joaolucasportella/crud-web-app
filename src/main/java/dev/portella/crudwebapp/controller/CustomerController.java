@@ -38,10 +38,15 @@ public class CustomerController {
     public String list(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "15") int size,
             Model model) {
 
+        if (size > 20 || size < 1) {
+            size = 15;
+        }
+
         Page<Customer> customerPage = customerService.findPaginated(page, size);
 
         model.addAttribute(MODEL, customerPage.getContent());
         model.addAttribute("currentPage", page);
+        model.addAttribute("size", size);
         model.addAttribute("totalPages", customerPage.getTotalPages());
         model.addAttribute("hasNextPage", customerPage.hasNext());
         return LIST;
