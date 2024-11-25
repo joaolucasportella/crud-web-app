@@ -37,6 +37,7 @@ public class JpaCustomerDAO implements CustomerDAO {
     public Page<Customer> findPaginated(Pageable pageable) {
         initializeCriteriaQuery();
         cq.select(root);
+        cq.orderBy(cb.asc(root.get("id")));
 
         TypedQuery<Customer> query = entityManager.createQuery(cq);
         query.setFirstResult((int) pageable.getOffset());
