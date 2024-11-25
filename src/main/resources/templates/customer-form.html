@@ -2,75 +2,114 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title th:text="${customer.id == null ? 'Novo Cliente' : 'Editar Cliente'}">Cliente</title>
-  <link rel="stylesheet" th:href="@{/css/style.css}" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 
-<body>
-  <h1 th:text="${customer.id == null ? 'Novo Cliente' : 'Editar Cliente'}">Título do Formulário</h1>
+<body class="d-flex flex-column min-vh-100 bg-dark text-light" id="page-body">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Projeto</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active text-decoration-none" th:href="@{/customer}">Customer</a>
+          </li>
+        </ul>
+        <button class="btn btn-outline-light" id="theme-toggle">Mudar Tema</button>
+      </div>
+    </div>
+  </nav>
 
-  <a th:href="@{/customer}">
-    <button type="button">Página Inicial</button>
-  </a>
+  <div class="container mt-5 flex-grow-1" style="max-width: 1200px;">
+    <h1 class="text-center mb-4" th:text="${customer.id == null ? 'Novo Cliente' : 'Editar Cliente'}">Título do
+      Formulário</h1>
 
-  <form th:action="@{/customer}" th:object="${customer}" method="post">
-    <input type="hidden" th:field="*{id}" />
-    <div>
-      <label for="firstName">Nome:</label>
-      <input type="text" id="firstName" th:field="*{firstName}" />
-      <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
-    </div>
-    <div>
-      <label for="lastName">Sobrenome:</label>
-      <input type="text" id="lastName" th:field="*{lastName}" />
-      <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
-    </div>
-    <div>
-      <label for="cpf">CPF:</label>
-      <input type="text" id="cpf" th:field="*{cpf}" />
-      <div th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"></div>
-    </div>
-    <div>
-      <label for="birthDate">Data de Nascimento:</label>
-      <input type="date" id="birthDate" th:field="*{birthDate}" />
-      <div th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></div>
-    </div>
-    <div>
-      <label for="email">Email:</label>
-      <input type="text" id="email" th:field="*{email}" />
-      <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
-    </div>
-    <div>
-      <label for="phone">Telefone:</label>
-      <input type="text" id="phone" th:field="*{phone}" />
-      <div th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
-    </div>
-    <div>
-      <label for="cep">CEP:</label>
-      <input type="text" id="cep" th:field="*{cep}" />
-      <div th:if="${#fields.hasErrors('cep')}" th:errors="*{cep}"></div>
-    </div>
-    <div>
-      <label for="state">Estado:</label>
-      <input type="text" id="state" th:field="*{state}" />
-      <div th:if="${#fields.hasErrors('state')}" th:errors="*{state}"></div>
-    </div>
-    <div>
-      <label for="city">Cidade:</label>
-      <input type="text" id="city" th:field="*{city}" />
-      <div th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></div>
-    </div>
-    <div>
-      <label for="address">Endereço:</label>
-      <input type="text" id="address" th:field="*{address}" />
-      <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
-    </div>
-    <div>
-      <button type="submit">Salvar</button>
-    </div>
-  </form>
+    <a th:href="@{/customer}" class="btn btn-primary mb-4">Página Inicial</a>
 
+    <form th:action="@{/customer}" th:object="${customer}" method="post" class="p-4 border rounded" id="form-body">
+      <input type="hidden" th:field="*{id}" />
+
+      <div class="mb-3">
+        <label for="firstName" class="form-label">Nome:</label>
+        <input type="text" id="firstName" th:field="*{firstName}" class="form-control" />
+        <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="text-danger"></div>
+      </div>
+
+      <div class="mb-3">
+        <label for="lastName" class="form-label">Sobrenome:</label>
+        <input type="text" id="lastName" th:field="*{lastName}" class="form-control" />
+        <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="text-danger"></div>
+      </div>
+
+      <div class="mb-3">
+        <label for="cpf" class="form-label">CPF:</label>
+        <input type="text" id="cpf" th:field="*{cpf}" class="form-control" />
+        <div th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}" class="text-danger"></div>
+      </div>
+
+      <div class="mb-3">
+        <label for="birthDate" class="form-label">Data de Nascimento:</label>
+        <input type="date" id="birthDate" th:field="*{birthDate}" class="form-control" />
+        <div th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}" class="text-danger"></div>
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Email:</label>
+        <input type="text" id="email" th:field="*{email}" class="form-control" />
+        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></div>
+      </div>
+
+      <div class="mb-3">
+        <label for="phone" class="form-label">Telefone:</label>
+        <input type="text" id="phone" th:field="*{phone}" class="form-control" />
+        <div th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="text-danger"></div>
+      </div>
+
+      <div class="mb-3">
+        <label for="cep" class="form-label">CEP:</label>
+        <input type="text" id="cep" th:field="*{cep}" class="form-control" />
+        <div th:if="${#fields.hasErrors('cep')}" th:errors="*{cep}" class="text-danger"></div>
+      </div>
+
+      <div class="mb-3">
+        <label for="state" class="form-label">Estado:</label>
+        <input type="text" id="state" th:field="*{state}" class="form-control" />
+        <div th:if="${#fields.hasErrors('state')}" th:errors="*{state}" class="text-danger"></div>
+      </div>
+
+      <div class="mb-3">
+        <label for="city" class="form-label">Cidade:</label>
+        <input type="text" id="city" th:field="*{city}" class="form-control" />
+        <div th:if="${#fields.hasErrors('city')}" th:errors="*{city}" class="text-danger"></div>
+      </div>
+
+      <div class="mb-3">
+        <label for="address" class="form-label">Endereço:</label>
+        <input type="text" id="address" th:field="*{address}" class="form-control" />
+        <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="text-danger"></div>
+      </div>
+
+      <button type="submit" class="btn btn-success">Salvar</button>
+    </form>
+  </div>
+
+  <footer class="mt-5 p-4 bg-primary text-center text-light d-flex justify-content-center align-items-center">
+    <p class="mb-0">&copy; 2024 Projeto. Todos os direitos reservados.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
   <script th:src="@{/js/cep.js}"></script>
+  <script th:src="@{/js/theme-toggle.js}"></script>
 </body>
 
 </html>
