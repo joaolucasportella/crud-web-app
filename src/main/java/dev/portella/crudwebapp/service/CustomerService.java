@@ -1,5 +1,6 @@
 package dev.portella.crudwebapp.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -36,7 +37,10 @@ public class CustomerService {
         customerDAO.deleteById(id);
     }
 
-    public boolean isUnique(String field, String value) {
-        return customerDAO.findByField(field, value).isEmpty();
+    public boolean isUnique(Long id, String field, String value) {
+        List<Customer> customers = customerDAO.findByField(field, value);
+        customers.removeIf(customer -> customer.getId().equals(id));
+
+        return customers.isEmpty();
     }
 }
