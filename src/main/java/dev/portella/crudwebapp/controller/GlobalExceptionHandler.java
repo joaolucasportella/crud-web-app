@@ -5,7 +5,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.NoHandlerFoundException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -18,14 +17,6 @@ public class GlobalExceptionHandler {
     public String handleGeneralException(Exception ex, Model model) {
         model.addAttribute(ERROR, "Erro Interno");
         model.addAttribute(MESSAGE, ex.getMessage());
-        return ERROR;
-    }
-
-    @ExceptionHandler(NoHandlerFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String handleNotFound(NoHandlerFoundException ex, Model model) {
-        model.addAttribute(ERROR, "Página Não Encontrada");
-        model.addAttribute(MESSAGE, "O recurso solicitado não pôde ser encontrado.");
         return ERROR;
     }
 
