@@ -69,23 +69,19 @@ public class JpaCustomerDAO implements CustomerDAO {
 
     @Override
     @Transactional
-    public Customer save(Customer customer) {
-        if (customer.getId() == null) {
-            entityManager.persist(customer);
-        } else {
-            entityManager.merge(customer);
-        }
-
-        return customer;
+    public void create(Customer customer) {
+        entityManager.persist(customer);
     }
 
     @Override
     @Transactional
-    public void deleteById(Long id) {
-        Customer customer = findById(id);
+    public void update(Customer customer) {
+        entityManager.merge(customer);
+    }
 
-        if (customer != null) {
-            entityManager.remove(customer);
-        }
+    @Override
+    @Transactional
+    public void delete(Customer customer) {
+        entityManager.remove(customer);
     }
 }

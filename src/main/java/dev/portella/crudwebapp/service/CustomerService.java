@@ -21,20 +21,42 @@ public class CustomerService {
     }
 
     public Page<Customer> findPaginated(int page, int size) {
+        if (size > 20 || size < 1) {
+            size = 15;
+        }
+
         Pageable pageable = PageRequest.of(page, size);
         return customerDAO.findPaginated(pageable);
     }
 
-    public Optional<Customer> findById(Long id) {
-        return Optional.ofNullable(customerDAO.findById(id));
+    public Optional<Customer> findById(String id) {
+        if (id == null || id.isEmpty()) {
+            return Optional.empty();
+        }
+
+        try {
+            Long parsedId = Long.parseLong(id);
+            return Optional.ofNullable(customerDAO.findById(parsedId));
+        } catch (NumberFormatException e) {
+            return Optional.empty();
+        }
     }
 
-    public Customer save(Customer customer) {
-        return customerDAO.save(customer);
+    public Customer findByIdOrThrow(String id) {
+        return findById(id).orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado."));
     }
 
-    public void deleteById(Long id) {
-        customerDAO.deleteById(id);
+    public void save(Customer customer) {
+        if (customer.getId() == null) {
+            customerDAO.create(customer);
+        } else {
+            customerDAO.update(customer);
+        }
+    }
+
+    public void deleteById(String id) {
+        Customer customer = findByIdOrThrow(id);
+        customerDAO.delete(customer);
     }
 
     public boolean isUnique(Long id, String field, String value) {

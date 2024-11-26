@@ -28,7 +28,7 @@ public class CustomerController {
     private static final String FORM = "customer-form";
     private static final String LIST = "customer-list";
     private static final String SEARCH = "customer-search";
-    private static final String MODEL = "customer";
+    private static final String CUSTOMER = "customer";
 
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
@@ -37,14 +37,9 @@ public class CustomerController {
     @GetMapping
     public String list(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "15") int size,
             Model model) {
-
-        if (size > 20 || size < 1) {
-            size = 15;
-        }
-
         Page<Customer> customerPage = customerService.findPaginated(page, size);
 
-        model.addAttribute(MODEL, customerPage.getContent());
+        model.addAttribute(CUSTOMER, customerPage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("size", size);
         model.addAttribute("totalPages", customerPage.getTotalPages());
@@ -54,24 +49,20 @@ public class CustomerController {
 
     @GetMapping("/search")
     public String searchById(@RequestParam String id, Model model) {
-        if (id == null || id.isEmpty()) {
-            return REDIRECT;
-        }
-
-        Optional<Customer> customer = customerService.findById(Long.parseLong(id));
+        Optional<Customer> customer = customerService.findById(id);
 
         if (customer.isEmpty()) {
             model.addAttribute("errorMessage", "customer.notFound");
             return SEARCH;
         }
 
-        model.addAttribute(MODEL, List.of(customer.get()));
+        model.addAttribute(CUSTOMER, List.of(customer.get()));
         return SEARCH;
     }
 
     @GetMapping("/new")
     public String createForm(Model model) {
-        model.addAttribute(MODEL, new Customer());
+        model.addAttribute(CUSTOMER, new Customer());
         return FORM;
     }
 
@@ -85,14 +76,13 @@ public class CustomerController {
     }
 
     @GetMapping("/edit/{id}")
-    public String editForm(@PathVariable Long id, Model model) {
-        model.addAttribute(MODEL,
-                customerService.findById(id).orElseThrow(() -> new IllegalArgumentException("ID inválido: " + id)));
+    public String editForm(@PathVariable String id, Model model) {
+        model.addAttribute(CUSTOMER, customerService.findByIdOrThrow(id));
         return FORM;
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
+    public String delete(@PathVariable String id) {
         customerService.deleteById(id);
         return REDIRECT;
     }

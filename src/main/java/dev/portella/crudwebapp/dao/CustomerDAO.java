@@ -14,7 +14,9 @@ public interface CustomerDAO {
 
     List<Customer> findByField(String field, Object value);
 
-    Customer save(Customer customer);
+    void create(Customer customer);
 
-    void deleteById(Long id);
+    void update(Customer customer);
+
+    void delete(Customer customer);
 }
