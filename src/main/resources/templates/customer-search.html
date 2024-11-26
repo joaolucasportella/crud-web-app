@@ -29,7 +29,7 @@
     </div>
   </nav>
 
-  <div class=" container mt-5 flex-grow-1" id="main-content" style="max-width: 1600px;">
+  <div class="container-fluid mt-5 flex-grow-1" id="main-content">
     <h1 class="text-center mb-4">Busca de Cliente</h1>
 
     <div class="d-flex justify-content-between mb-4">
@@ -51,8 +51,8 @@
       <span th:text="#{${errorMessage}}"></span>
     </div>
 
-    <div th:if="${errorMessage == null}">
-      <table class="table table-striped table-bordered table-dark" style="width: 1576px;">
+    <div th:if="${errorMessage == null}" class="table-responsive d-flex mb-3">
+      <table class="table table-striped table-bordered table-dark">
         <thead>
           <tr>
             <th>ID</th>
