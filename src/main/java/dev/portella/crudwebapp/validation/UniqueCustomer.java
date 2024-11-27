@@ -12,7 +12,7 @@ import jakarta.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = UniqueCustomerValidator.class)
 public @interface UniqueCustomer {
-    String message() default "Este cliente já existe.";
+    String message() default "Este cliente já foi cadastrado.";
 
     Class<?>[] groups() default {};
 
