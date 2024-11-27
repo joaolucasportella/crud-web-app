@@ -28,6 +28,6 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           key: ${{ secrets.KEY }}
-          source: 'target/crud-web-app.war'
+          source: 'target/crudwebapp.war'
           target: '/opt/tomcat/webapps'
           strip_components: 1
