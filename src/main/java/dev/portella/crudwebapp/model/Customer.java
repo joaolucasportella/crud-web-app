@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
@@ -39,6 +40,7 @@ public class Customer {
     private String cpf;
 
     @NotNull(message = "{customer.birthDate.notNull}")
+    @Past(message = "{customer.birthDate.past}")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
